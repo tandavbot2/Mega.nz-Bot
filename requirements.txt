@@ -3,7 +3,7 @@ TgCrypto
 filetype
 filesplit
 wget
-git+https://github.com/Itz-fork/pyro-mega.py.git
+git+https://github.com/tandavbot2/pyro-mega.py/tree/master
 Flask==2.2.2
 gunicorn==20.1.0
 aiohttp==3.8.1
