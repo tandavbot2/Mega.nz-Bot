@@ -21,7 +21,10 @@ from config import Config
 
 
 # Automatic Url Detect (From stackoverflow. Can't find link lol)
-MEGA_REGEX = "https?:\/\/mega\.nz\/(?:[^\/\s]+\/)+"
+#MEGA_REGEX = "https?:\/\/mega\.nz\/(?:[^\/\s]+\/)+"
+#MEGA_REGEX = "https?:\/\/mega\.nz\/(?:[^\/\s]+\/)+"
+MEGA_REGEX = r'https?://mega\.nz/(?:folder|file)/[0-9A-Za-z_-]+#[0-9A-Za-z_-]+'
+
 
 
 # Function to download Mega Link
