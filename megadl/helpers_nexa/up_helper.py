@@ -36,7 +36,8 @@ async def guess_and_send(input_file, chat_id, message, thumb_path="cache"):
         elif re.search(r'\bimage\b', filemimespotted):
             await Client.send_photo(chat_id, f"{input_file}", caption=f"`Uploaded by` {mention}", progress=progress_for_pyrogram, progress_args=("**Trying to Upload Now!** \n", message, start_time))
         # For videos
-        if re.search(r'\bvideo\b', f_mime.mime):
+    # Check if the MIME type corresponds to video
+    if re.search(r'\bvideo\b', f_mime.mime):
         viddura = await get_vid_duration(f"{input_file}")
         thumbnail_path = f"{thumb_path}/thumbnail_{os.path.basename(input_file)}.jpg"
         if os.path.exists(thumbnail_path):
