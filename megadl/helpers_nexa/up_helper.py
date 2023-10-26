@@ -49,5 +49,5 @@ async def guess_and_send(input_file, chat_id, message, thumb_path="cache"):
         else:
             await Client.send_document(chat_id, f"{input_file}", caption=f"`Uploaded by` {mention}", progress=progress_for_pyrogram, progress_args=("**Trying to Upload Now!** \n", message, start_time))
     except Exception as e:
-        print(e)
-        await Client.send_document(chat_id, f"{input_file}", caption=f"`Uploaded by` {mention}", progress=progress_for_pyrogram, progress_args=("**Trying to Upload Now!** \n", message, start_time))
+    print(e)
+    pass
