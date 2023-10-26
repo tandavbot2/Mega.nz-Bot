@@ -28,8 +28,7 @@ async def guess_and_send(input_file, chat_id, message, thumb_path="cache"):
         mention = "**Your Mega.nz-Bot!**"
     if not f_mime or not f_mime.mime:
         return await Client.send_document(chat_id, f"{input_file}", caption=f"`Uploaded by` {mention}", progress=progress_for_pyrogram, progress_args=("**Trying to Upload Now!** \n", message, start_time))
-    try:
-        filemimespotted = f_mime.mime
+        
         # For gifs
         if re.search(r'\bimage/gif\b', filemimespotted):
             await Client.send_animation(chat_id, f"{input_file}", caption=f"`Uploaded by` {mention}", progress=progress_for_pyrogram, progress_args=("**Trying to Upload Now!** \n", message, start_time))
@@ -37,13 +36,15 @@ async def guess_and_send(input_file, chat_id, message, thumb_path="cache"):
         elif re.search(r'\bimage\b', filemimespotted):
             await Client.send_photo(chat_id, f"{input_file}", caption=f"`Uploaded by` {mention}", progress=progress_for_pyrogram, progress_args=("**Trying to Upload Now!** \n", message, start_time))
         # For videos
-        elif re.search(r'\bvideo\b', filemimespotted):
-            viddura = await get_vid_duration(f"{input_file}")
-            thumbnail_path = f"{thumb_path}/thumbnail_{os.path.basename(input_file)}.jpg"
-            if os.path.exists(thumbnail_path):
-                os.remove(thumbnail_path)
-            await run_shell_cmds(f"ffmpeg -i {input_file} -ss 00:00:01.000 -vframes 1 {thumbnail_path}")
-            await Client.send_video(chat_id, f"{input_file}", duration=viddura, thumb=thumbnail_path, caption=f"`Uploaded by` {mention}", progress=progress_for_pyrogram, progress_args=("**Trying to Upload Now!** \n", message, start_time))
+        if re.search(r'\bvideo\b', f_mime.mime):
+        viddura = await get_vid_duration(f"{input_file}")
+        thumbnail_path = f"{thumb_path}/thumbnail_{os.path.basename(input_file)}.jpg"
+        if os.path.exists(thumbnail_path):
+            os.remove(thumbnail_path)
+        await run_shell_cmds(f"ffmpeg -i {input_file} -ss 00:00:01.000 -vframes 1 {thumbnail_path}")
+        await Client.send_video(chat_id, f"{input_file}", duration=viddura, thumb=thumbnail_path, caption=f"`Uploaded by` {mention}", progress=progress_for_pyrogram, progress_args=("**Trying to Upload Now!** \n", message, start_time))
+    else:
+        await Client.send_document(chat_id, f"{input_file}", caption=f"`Uploaded by` {mention}", progress=progress_for_pyrogram, progress_args=("**Trying to Upload Now!** \n", message, start_time))
         # For audio
         elif re.search(r'\baudio\b', filemimespotted):
             await Client.send_audio(chat_id, f"{input_file}", caption=f"`Uploaded by` {mention}", progress=progress_for_pyrogram, progress_args=("**Trying to Upload Now!** \n", message, start_time))
